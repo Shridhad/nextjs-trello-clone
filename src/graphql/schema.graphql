@@ -1,0 +1,19 @@
+type Query {
+  allProjects: [Project]
+}
+
+type User {
+  id: Int
+  name: String
+  email: String
+}
+
+type Project {
+  id: Int
+  name: String
+  archived: Boolean
+  type: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  creator: User
+}

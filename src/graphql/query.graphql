@@ -1,0 +1,14 @@
+type Query {
+  GET_PROJECTS
+}
+
+query GET_PROJECTS {
+  projects {
+    id
+    name
+    archived
+    createdAt
+    updatedAt
+    type
+  }
+}
