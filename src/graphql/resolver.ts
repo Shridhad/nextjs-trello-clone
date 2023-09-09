@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 export const allProjects = async () => {
   const projects = await prisma.project.findMany({
-    include: { creator: true },
+    include: { Profile: true },
   });
   return projects;
 };

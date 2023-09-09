@@ -2,18 +2,20 @@ type Query {
   allProjects: [Project]
 }
 
-type User {
-  id: Int
+type Profile {
+  id: ID!
   name: String
-  email: String
 }
 
 type Project {
-  id: Int
+  id: ID!
   name: String
-  archived: Boolean
+  description: String
   type: String
+  key: String
+  archived: Boolean
   createdAt: DateTime
   updatedAt: DateTime
-  creator: User
+  profileId: ID
+  Profile: Profile
 }

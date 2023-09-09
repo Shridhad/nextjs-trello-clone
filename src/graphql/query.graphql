@@ -1,14 +1,14 @@
-type Query {
-  GET_PROJECTS
-}
-
 query GET_PROJECTS {
   projects {
     id
+    key
     name
+    description
+    type
+    profile
+    profileId
     archived
     createdAt
     updatedAt
-    type
   }
 }
