@@ -1,61 +1,14 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
+  previewFeatures = ["multiSchema", "postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-  schemas   = ["auth", "public"]
-}
-
-model Card {
-  id          String    @id
-  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
-  title       String?   @default("")
-  description String?   @default("")
-  updatedAt   DateTime? @updatedAt @db.Timestamptz(6)
-  dueDate     DateTime? @db.Timestamptz(6)
-  archived    Boolean?  @default(false)
-  listId      String?   @db.Uuid
-  projectId   String?   @db.Uuid
-  profileId   String?   @db.Uuid
-  key         String?   @default("") @db.VarChar
-  list        CardList? @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  Profile     Profile?  @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@schema("public")
-}
-
-model Project {
-  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt   DateTime     @default(now()) @db.Timestamptz(6)
-  name        String?
-  description String?      @default("")
-  type        ProjectType? @default(TodoList)
-  archived    Boolean?     @default(false)
-  updatedAt   DateTime?    @updatedAt @db.Timestamptz(6)
-  profileId   String?      @default(dbgenerated("auth.uid()")) @db.Uuid
-  key         String?      @default("") @db.VarChar
-  cards       Card[]
-  CardList    CardList[]
-  Profile     Profile?     @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@schema("public")
-}
-
-model Profile {
-  id        String     @id @db.Uuid
-  createdAt DateTime   @default(now()) @db.Timestamptz(6)
-  name      String?    @default("")
-  Card      Card[]
-  CardList  CardList[]
-  users     users      @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  Project   Project[]
-
-  @@schema("public")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [uuid_ossp(map: "uuid-ossp", schema: "extensions")]
+  schemas    = ["auth", "public"]
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -316,34 +269,9 @@ model users {
   identities                  identities[]
   mfa_factors                 mfa_factors[]
   sessions                    sessions[]
-  Profile                     Profile?
 
   @@index([instance_id])
   @@schema("auth")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model CardList {
-  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
-  title       String?   @default("")
-  description String?   @default("")
-  order       Int?      @default(0)
-  updatedAt   DateTime? @db.Timestamptz(6)
-  archived    Boolean?  @default(false)
-  projectId   String?   @db.Uuid
-  profileId   String?   @db.Uuid
-  cards       Card[]
-  Profile     Profile?  @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  Project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@schema("public")
-}
-
-enum ProjectType {
-  TodoList
-
-  @@schema("public")
 }
 
 enum aal_level {
