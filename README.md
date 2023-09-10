@@ -31,3 +31,12 @@ Check out the [`/app/_examples`](./app/_examples/) folder for an example of crea
 ### Database Migration
 
 1. Update the `prisma/schema.prisma` file with desired schema
+2. Run `npx prisma generate` to generate Prisma types
+3. Run `npx prisma db push` to updated schema with supabase (Note: it will drop database)
+4. `npx prisma migrate dev --name init`
+
+### GraphQL TypeGen
+
+We need to generate typescript types from GraphQL schema using [graphql-codegen](https://www.apollographql.com/docs/apollo-server/workflow/generate-types/)
+
+1. After updating the graphql schema run the command - `npm run codegen`

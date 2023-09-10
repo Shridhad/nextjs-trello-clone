@@ -6,16 +6,13 @@
     "start": "next start"
   },
   "dependencies": {
-    "@apollo/server": "^4.9.3",
     "@as-integrations/next": "^2.0.2",
-    "@graphql-tools/schema": "^10.0.0",
+    "@nextui-org/react": "^2.1.10",
     "@prisma/client": "^5.2.0",
     "@supabase/auth-helpers-nextjs": "latest",
     "@supabase/supabase-js": "latest",
-    "apollo-server-core": "^3.12.1",
     "autoprefixer": "10.4.14",
-    "graphql": "^16.8.0",
-    "graphql-scalars": "^1.22.2",
+    "framer-motion": "^10.16.4",
     "next": "latest",
     "postcss": "8.4.24",
     "react": "18.2.0",
@@ -28,7 +25,6 @@
     "@types/react": "18.2.12",
     "@types/react-dom": "18.2.5",
     "encoding": "^0.1.13",
-    "graphql-tag": "^2.12.6",
     "prisma": "^5.2.0"
   }
 }
