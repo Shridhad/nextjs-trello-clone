@@ -15,22 +15,26 @@ export default async function HeaderNav() {
 
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10">
-      <div className="w-full max-w-4xl flex justify-between items-end p-3 text-sm text-foreground">
-        <div>
-          {user ? (
-            <div className="flex items-center gap-4">
-              Hey, {user.email}!
-              <LogoutButton />
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-            >
-              Login
-            </Link>
-          )}
-        </div>
+      <div className="w-full max-w-4xl flex justify-end items-end gap-3 p-3 text-sm text-foreground">
+        {user ? (
+          <div className="flex items-center gap-4">
+            Hey, {user.email}!
+            <LogoutButton />
+          </div>
+        ) : (
+          <Link
+            href="/login"
+            className="py-2 px-3 row-span-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+          >
+            Login
+          </Link>
+        )}
+        <Link
+          href="/"
+          className="py-2 px-3 row-span-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+        >
+          Home
+        </Link>
         <Link
           href="/projects"
           className="py-2 px-3 row-span-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"

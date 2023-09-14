@@ -13,7 +13,7 @@ export async function fetchProject(key: string) {
     where: {
       key,
     },
-    include: { Profile: true },
+    include: { Profile: true, CardList: true },
   });
 }
 
@@ -23,13 +23,6 @@ export async function createIssue() {
   prisma.card.create({
     data: {
       title: "",
-      description: "",
-      profileId: "",
-      projectId: "",
-      listId: "",
-    },
-    include: {
-      Profile: true,
     },
   });
 }

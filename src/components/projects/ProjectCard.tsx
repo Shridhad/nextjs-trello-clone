@@ -14,8 +14,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <Card
-      // className="max-w-[400px]"
-      className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px]"
+      className="bg-background/20 dark:bg-default-100/50 max-w-[400px]"
       isBlurred
       shadow="sm"
     >

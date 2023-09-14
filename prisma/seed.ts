@@ -55,12 +55,14 @@ function getProjects(profiles: Profile[]) {
         "Trello clone application using Prisma, Supabase, and NextJs",
       type: ProjectType.Kanban,
       profileId: profiles[0].id,
+      key: "TRC",
     },
     {
       name: "Learn Daisy UI",
       description: "Build UI components using daisy UI",
       type: ProjectType.TodoList,
       profileId: profiles[1].id,
+      key: "DAI",
     },
   ] as Project[];
 }

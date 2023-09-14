@@ -12,16 +12,16 @@ datasource db {
 
 model Card {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt   DateTime @default(now()) @db.Timestamptz(6)
-  title       String   @default("")
-  description String   @default("")
+  createdAt   DateTime? @default(now()) @db.Timestamptz(6)
+  title       String?   @default("")
+  description String?   @default("")
   updatedAt   DateTime @updatedAt @db.Timestamptz(6)
-  dueDate     DateTime @db.Timestamptz(6)
-  archived    Boolean  @default(false)
+  dueDate     DateTime? @db.Timestamptz(6)
+  archived    Boolean?  @default(false)
   listId      String   @db.Uuid
   projectId   String   @db.Uuid
   profileId   String   @db.Uuid
-  key         String   @default("") @db.VarChar
+  key         String?   @default("") @db.VarChar
   list        CardList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   Profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -36,7 +36,7 @@ model Project {
   archived    Boolean     @default(false)
   updatedAt   DateTime    @updatedAt @db.Timestamptz(6)
   profileId   String      @default(dbgenerated("auth.uid()")) @db.Uuid
-  key         String      @default("") @db.VarChar
+  key         String      @db.VarChar
   cards       Card[]
   CardList    CardList[]
   Profile     Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: NoAction)
