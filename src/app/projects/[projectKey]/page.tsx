@@ -1,6 +1,5 @@
 import { fetchProject } from "@/src/apis/projects";
 import { createIssue, createNewList } from "./actions";
-import CreateNewIssue from "@/src/components/projects/CreateNewIssue";
 import CreateNewList from "@/src/components/projects/CreateNewList";
 import { CardList } from "@/src/components/cardlist/CardList";
 

@@ -1,11 +1,15 @@
 "use server";
 
-import { createList } from "@/src/apis/cardList";
+import { createList } from "@/src/apis/cardLists";
 
-export async function createIssue(form: FormData) {
-  console.log("**** create issue ", form);
+export async function createIssue(
+  title: string,
+  description: string,
+  listId: string
+) {
+  console.log("**** create issue ");
   // throw new Error("Error Error");
-  return { form, result: "Ok" };
+  return { result: "Ok" };
 }
 
 export async function createNewList(title: string, projectId: string) {
