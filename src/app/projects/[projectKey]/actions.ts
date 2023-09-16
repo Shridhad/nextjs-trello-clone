@@ -1,7 +1,6 @@
 "use server";
 
 import { createList } from "@/src/apis/cardList";
-import { Project } from "@prisma/client";
 
 export async function createIssue(form: FormData) {
   console.log("**** create issue ", form);

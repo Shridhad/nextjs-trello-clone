@@ -5,11 +5,11 @@ import { Project } from "@prisma/client";
 import { useState } from "react";
 
 type CreateNewList = {
-  projectKey: string,
-  create: (name: string, key: string) => void
+  projectKey: string;
+  create: (name: string, key: string) => void;
 };
 
-export default function CreateNewList({projectKey, create}: CreateNewList) {
+export default function CreateNewList({ projectKey, create }: CreateNewList) {
   const [showInput, setShowInput] = useState(false);
   const [listName, setListName] = useState("");
 
@@ -20,20 +20,20 @@ export default function CreateNewList({projectKey, create}: CreateNewList) {
 
   return (
     <>
-      <div className="flex gap-4 items-center">
+      <div className="flex items-stretch w-full">
         {showInput ? (
           <form action={createList}>
             <Input
               type="text"
               value={listName}
+              className="flex-grow"
               placeholder="Enter List Name"
               onChange={(event) => setListName(event.target.value)}
               endContent={
                 <Button
                   size="sm"
-                  color="primary"
                   radius="sm"
-                  variant="flat"
+                  variant="light"
                   onClick={createList}
                 >
                   Create
@@ -43,13 +43,11 @@ export default function CreateNewList({projectKey, create}: CreateNewList) {
           </form>
         ) : (
           <Button
-            size="sm"
-            color="primary"
-            variant="flat"
             radius="sm"
+            className="flex-grow"
             onClick={() => setShowInput(true)}
           >
-            Create New List
+            + Create New List
           </Button>
         )}
       </div>

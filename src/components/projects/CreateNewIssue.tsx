@@ -41,8 +41,8 @@ export default function CreateNewIssue({
 
   return (
     <>
-      <Button color="primary" variant="flat" onPress={onOpen} radius="sm">
-        Create New Issue
+      <Button variant="light" onPress={onOpen} radius="sm" className="w-full">
+        + Create New Issue
       </Button>
       <Modal
         size="3xl"

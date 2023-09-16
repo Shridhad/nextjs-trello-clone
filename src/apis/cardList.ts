@@ -11,6 +11,9 @@ export async function fetchLists(projectId: string) {
 
 export async function createList(title: string, projectId: string) {
   console.log("creating with ", title, projectId);
+  if (!title || !projectId) {
+    throw new Error("title and projectId are required.");
+  }
   return await prisma.cardList.create({
     data: {
       title,

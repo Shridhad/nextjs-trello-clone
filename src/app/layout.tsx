@@ -14,7 +14,7 @@ export default function RootLayout({
       <body className="bg-background">
         <div className="min-h-screen flex flex-col items-center">
           <HeaderNav />
-          <main className="min-h-screen w-full flex flex-col gap-14 max-w-4xl px-3 py-16 lg:py-24 text-foreground">
+          <main className="w-full flex flex-col items-stretch flex-grow gap-14 max-w-6xl px-3 py-3 text-foreground">
             <Providers>{children}</Providers>
           </main>
         </div>
