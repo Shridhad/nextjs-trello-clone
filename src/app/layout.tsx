@@ -18,10 +18,8 @@ export default function RootLayout({
         "
         >
           <HeaderNav />
-          <Divider className="flex min-w-screen " />
-          <main className="w-full flex flex-col items-stretch flex-grow gap-14  px-3 py-3 text-foreground">
-            <Providers>{children}</Providers>
-          </main>
+          <Divider />
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>

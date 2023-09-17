@@ -6,7 +6,7 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-full flex py-6">
+    <div className="min-h-full flex">
       <div className="flex-grow">{children}</div>
     </div>
   );

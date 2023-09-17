@@ -22,11 +22,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     );
   }
 
-  console.log("project: ", project);
-
   return (
-    <div className="gap-2 flex flex-col items-start justify-start">
-      <h1 className="text-lg px-2 my-2">{project.name}</h1>
+    <div className="gap-2 flex flex-col">
+      <div className="py-2  bg-gradient-to-r from-indigo-500/30 rounded-sm">
+        <h1 className="text-lg px-2">{project.name}</h1>
+      </div>
       <div className="flex flex-nowrap animate-in opacity-0 gap-3">
         {project.CardList.map((list) => {
           return (

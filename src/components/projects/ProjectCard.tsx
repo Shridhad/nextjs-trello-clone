@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Link } from "@nextui-org/link";
-import { Divider } from "@nextui-org/divider";
+import { Divider } from "@/src/components/Divider";
 import { Project } from "@prisma/client";
 import { Chip } from "@nextui-org/chip";
 
@@ -13,9 +13,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <Card
-      className="bg-background/20 dark:bg-default-100/50 max-w-[400px]"
-      isBlurred
+      className="max-w-[400px] cursor-pointer"
       shadow="sm"
+      as={Link}
+      href={`/projects/${project.key}`}
     >
       <CardHeader className="flex gap-3">
         <div className="flex flex-col">
@@ -29,13 +30,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <CardBody>
         <p>{project.description}</p>
       </CardBody>
-      <CardFooter>
-        <div className="flex flex-grow items-end justify-end">
-          <Link href={`/projects/${project.key}`} as={Link} color="primary">
-            Load Project
-          </Link>
-        </div>
-      </CardFooter>
     </Card>
   );
 }

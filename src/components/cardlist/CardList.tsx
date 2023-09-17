@@ -1,7 +1,7 @@
 import { Card, CardList, Project } from "@/src/apis/types";
 import CreateNewIssue from "../projects/CreateNewIssue";
 import { Card as UICard, CardHeader, CardBody } from "@nextui-org/card";
-import { CardComponent } from "../card/Card";
+import { CardComponent } from "./Card";
 import { Divider } from "@/src/components/Divider";
 
 type CardListProps = {

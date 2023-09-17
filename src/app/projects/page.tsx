@@ -4,7 +4,7 @@ export default async function ProjectsPage() {
   const projects = await fetchProjects();
 
   return (
-    <div className="gap-2 grid grid-cols-3 grid-rows-2 animate-in opacity-0">
+    <div className="gap-2 grid grid-cols-3 animate-in opacity-0">
       {projects.map((project) => (
         <ProjectCard project={project} />
       ))}
