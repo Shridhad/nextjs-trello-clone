@@ -1,21 +1,21 @@
 "use client";
 
 import { Button, Input } from "@nextui-org/react";
-import { Project } from "@prisma/client";
 import { useState } from "react";
 
 type CreateNewList = {
-  projectKey: string;
+  projectId: string;
   create: (name: string, key: string) => void;
 };
 
-export default function CreateNewList({ projectKey, create }: CreateNewList) {
+export default function CreateNewList({ projectId, create }: CreateNewList) {
   const [showInput, setShowInput] = useState(false);
   const [listName, setListName] = useState("");
 
   const createList = () => {
-    console.log("List Name: ", listName);
-    create(listName, projectKey);
+    create(listName, projectId);
+    setShowInput(false);
+    setListName("");
   };
 
   return (
@@ -44,6 +44,7 @@ export default function CreateNewList({ projectKey, create }: CreateNewList) {
         ) : (
           <Button
             radius="sm"
+            variant="light"
             className="flex-grow"
             onClick={() => setShowInput(true)}
           >

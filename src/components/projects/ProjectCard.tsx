@@ -1,5 +1,4 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { Divider } from "@nextui-org/divider";
 import { Project } from "@prisma/client";
@@ -32,14 +31,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </CardBody>
       <CardFooter>
         <div className="flex flex-grow items-end justify-end">
-          <Button
-            href={`/projects/${project.key}`}
-            as={Link}
-            color="primary"
-            variant="solid"
-          >
+          <Link href={`/projects/${project.key}`} as={Link} color="primary">
             Load Project
-          </Button>
+          </Link>
         </div>
       </CardFooter>
     </Card>

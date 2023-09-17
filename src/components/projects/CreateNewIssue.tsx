@@ -16,25 +16,23 @@ import { Project } from "@prisma/client";
 
 type CreateNewIssueProps = {
   project: Project;
-  create: (form: FormData) => any;
+  listId: string;
+  create: (title: string, description: string, listId: string) => any;
 };
 
 export default function CreateNewIssue({
   project,
+  listId,
   create,
 }: CreateNewIssueProps) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [transitioning, startTransition] = useTransition();
-  const [issueTitle, setIssueTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const onCreate = () => {
-    const form = new FormData();
-    form.set("title", issueTitle);
-    form.set("description", description);
     startTransition(async () => {
-      const response = await create(form);
-      console.log("**** response ", response);
+      const response = await create(title, description, listId);
       onClose();
     });
   };
@@ -71,9 +69,9 @@ export default function CreateNewIssue({
               <ModalBody>
                 <Input
                   radius="sm"
-                  value={issueTitle}
+                  value={title}
                   placeholder="Issue Title"
-                  onValueChange={(title) => setIssueTitle(title)}
+                  onValueChange={(title) => setTitle(title)}
                 ></Input>
                 <Textarea
                   radius="sm"

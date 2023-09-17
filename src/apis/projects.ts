@@ -1,4 +1,4 @@
-import { Card, PrismaClient, Project } from "@prisma/client";
+import { PrismaClient, Project } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -13,16 +13,14 @@ export async function fetchProject(key: string) {
     where: {
       key,
     },
-    include: { Profile: true, CardList: true },
-  });
-}
-
-export async function createIssue() {
-  const issue = {};
-
-  prisma.card.create({
-    data: {
-      title: "",
+    include: {
+      Profile: true,
+      CardList: {
+        orderBy: {
+          order: "asc",
+        },
+        include: { Card: true },
+      },
     },
   });
 }

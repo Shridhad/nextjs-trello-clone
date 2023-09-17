@@ -8,5 +8,11 @@ module.exports = {
   ],
   theme: {},
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      layout: {
+        dividerWeight: "1px",
+      },
+    }),
+  ],
 };
