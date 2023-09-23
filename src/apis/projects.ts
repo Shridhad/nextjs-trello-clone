@@ -1,6 +1,7 @@
 import { PrismaClient, Project } from "@prisma/client";
 
 const prisma = new PrismaClient();
+const cache: { [key: string]: Project } = {};
 
 export async function fetchProjects() {
   return (await prisma.project.findMany({
@@ -9,7 +10,10 @@ export async function fetchProjects() {
 }
 
 export async function fetchProject(key: string) {
-  return await prisma.project.findFirst({
+  if (cache[key]) {
+    return cache[key];
+  }
+  const project = await prisma.project.findFirst({
     where: {
       key,
     },
@@ -23,4 +27,8 @@ export async function fetchProject(key: string) {
       },
     },
   });
+  if (project) {
+    cache[key] = project;
+  }
+  return project;
 }

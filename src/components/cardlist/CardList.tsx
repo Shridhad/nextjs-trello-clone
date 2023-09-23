@@ -12,15 +12,18 @@ type CardListProps = {
 
 export async function CardList({ list, project, create }: CardListProps) {
   return (
-    <UICard className="p-2 backdrop-blur-lg backdrop-saturate-[1.8] shadow-medium">
+    <UICard
+      className="p-2 bg-transparent shadow-none border card-bg"
+      radius="sm"
+    >
       <CardHeader className="p-0 items-start flex-col">
         <h3 className="font-bold py-2">{list.title}</h3>
         <Divider />
       </CardHeader>
       <CardBody className="p-0">
-        <div className="p-2 h-full flex flex-col gap-2">
+        <div className="p-2 h-full flex flex-col gap-3">
           {list.Card.map((card: Card) => (
-            <CardComponent card={card} />
+            <CardComponent key={card.id} card={card} />
           ))}
           <CreateNewIssue project={project} listId={list.id} create={create} />
         </div>

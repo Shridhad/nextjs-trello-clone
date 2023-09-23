@@ -9,7 +9,8 @@ type CardProps = {
 export async function CardComponent({ card }: CardProps) {
   return (
     <UICard
-      className={`p-2 items-start bg-default-100`}
+      isHoverable
+      className={`py-0 px-1 bg-transparent items-start hover:bg-indigo-500/30 shadow-none animate-in`}
       radius="sm"
       as={Button}
     >

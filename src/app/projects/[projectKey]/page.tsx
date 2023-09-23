@@ -24,13 +24,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="gap-2 flex flex-col">
-      <div className="py-2  bg-gradient-to-r from-indigo-500/30 rounded-sm">
+      <div className="py-2 animate-in  bg-gradient-to-r from-indigo-500/30 rounded-sm">
         <h1 className="text-lg px-2">{project.name}</h1>
       </div>
       <div className="flex flex-nowrap animate-in opacity-0 gap-3">
         {project.CardList.map((list) => {
           return (
-            <div className="w-80">
+            <div className="w-80" key={list.id}>
               <CardList
                 key={list.id}
                 list={list}

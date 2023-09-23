@@ -13,6 +13,7 @@ import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { Input, Textarea } from "@nextui-org/input";
 import { Project } from "@prisma/client";
+import { Divider } from "../Divider";
 
 type CreateNewIssueProps = {
   project: Project;
@@ -54,17 +55,20 @@ export default function CreateNewIssue({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex justify-start gap-1 items-center text-sm">
-                <Chip
-                  className="uppercase px-2 py-1"
-                  size="sm"
-                  radius="sm"
-                  variant="flat"
-                  color="secondary"
-                >
-                  {project.key}
-                </Chip>
-                <span> New Issue</span>
+              <ModalHeader className="flex flex-col">
+                <div className="flex justify-start align-middle gap-1 items-start">
+                  <Chip
+                    className="uppercase px-2 py-1"
+                    size="sm"
+                    radius="none"
+                    variant="flat"
+                    color="primary"
+                  >
+                    {project.key}
+                  </Chip>
+                  <span> New Issue</span>
+                </div>
+                <Divider />
               </ModalHeader>
               <ModalBody>
                 <Input
@@ -76,6 +80,8 @@ export default function CreateNewIssue({
                 <Textarea
                   radius="sm"
                   value={description}
+                  minRows={5}
+                  maxRows={30}
                   onValueChange={(desc) => setDescription(desc)}
                   placeholder="Issue Description"
                 ></Textarea>

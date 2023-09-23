@@ -30,6 +30,25 @@
   animation: animateIn 0.3s ease 0.15s both;
 }
 
+.card-bg {
+  background-image: radial-gradient(
+      121.65% 100% at 32.68% 0,
+      #8a62b585 0,
+      rgb(80 50 115 / 77%) 32.49%,
+      rgb(50 26 75 / 33%) 51.34%
+    ),
+    radial-gradient(
+      91.41% 43.04% at 50% 0,
+      #1915359c 20.67%,
+      rgb(85 66 119 / 47%) 100%
+    ),
+    radial-gradient(
+      69.96% 25.89% at 50% 100%,
+      #31284d 22.77%,
+      rgb(132 94 165 / 65%) 100%
+    );
+}
+
 @keyframes animateIn {
   from {
     opacity: 0;
