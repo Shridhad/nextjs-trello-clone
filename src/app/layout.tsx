@@ -4,7 +4,7 @@ import Head from "../components/Head/Head";
 import { Divider } from "../components/Divider";
 import { Providers } from "./providers";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
