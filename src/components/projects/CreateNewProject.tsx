@@ -1,37 +1,31 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
 import {
   Modal,
-  ModalContent,
-  ModalHeader,
   ModalBody,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
   useDisclosure,
 } from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
-import { Chip } from "@nextui-org/chip";
-import { Input, Textarea } from "@nextui-org/input";
-import { Project } from "@prisma/client";
+import { useState, useTransition } from "react";
 import { Divider } from "../Divider";
 
 type CreateNewIssueProps = {
-  project: Project;
-  create: (title: string, description: string, projectId: string) => any;
+  create: (title: string, key: string) => any;
 };
 
-export default function CreateNewIssue({
-  project,
-  create,
-}: CreateNewIssueProps) {
+export default function CreateNewProject({ create }: CreateNewIssueProps) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [transitioning, startTransition] = useTransition();
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [key, setKey] = useState("");
 
   const onCreate = () => {
     startTransition(async () => {
-      const response = await create(title, description, project.id);
+      await create(title, key);
       onClose();
     });
   };
@@ -39,7 +33,7 @@ export default function CreateNewIssue({
   return (
     <>
       <Button variant="light" onPress={onOpen} radius="sm" className="w-full">
-        + Create New Issue
+        + Create New Project
       </Button>
       <Modal
         size="3xl"
@@ -55,16 +49,7 @@ export default function CreateNewIssue({
             <>
               <ModalHeader className="flex flex-col">
                 <div className="flex justify-start align-middle gap-1 items-start">
-                  <Chip
-                    className="uppercase px-2 py-1"
-                    size="sm"
-                    radius="none"
-                    variant="flat"
-                    color="primary"
-                  >
-                    {project.key}
-                  </Chip>
-                  <span> New Issue</span>
+                  <span> New Porject</span>
                 </div>
                 <Divider />
               </ModalHeader>
@@ -75,14 +60,12 @@ export default function CreateNewIssue({
                   placeholder="Issue Title"
                   onValueChange={(title) => setTitle(title)}
                 ></Input>
-                <Textarea
+                <Input
                   radius="sm"
-                  value={description}
-                  minRows={5}
-                  maxRows={30}
-                  onValueChange={(desc) => setDescription(desc)}
+                  value={key}
+                  onValueChange={(desc) => setKey(desc)}
                   placeholder="Issue Description"
-                ></Textarea>
+                ></Input>
               </ModalBody>
               <ModalFooter>
                 <Button

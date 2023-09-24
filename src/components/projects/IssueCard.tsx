@@ -1,12 +1,12 @@
-import { Card, CardList } from "@/src/apis/types";
+import type { Issue } from "@/src/apis/types";
 import { Card as UICard } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 
 type CardProps = {
-  card: Card;
+  card: Issue;
 };
 
-export async function CardComponent({ card }: CardProps) {
+export async function IssueCard({ card }: CardProps) {
   return (
     <UICard
       isHoverable
@@ -17,6 +17,10 @@ export async function CardComponent({ card }: CardProps) {
       <p className="px-1 py-1 border-b-solid text-left text-small">
         {card.title}
       </p>
+      {/* <div className="flex gap-2">
+        <span className="px-1 text-xs italic">{card.status}</span>
+        <span className="px-1 text-xs italic">{card.priority}</span>
+      </div> */}
     </UICard>
   );
 }

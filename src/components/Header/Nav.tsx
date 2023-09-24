@@ -1,10 +1,9 @@
-import { authOptions } from "@/src/app/api/auth/[...nextauth]/route";
+import { getServerAuthSession } from "@/src/app/api/auth/[...nextauth]/route";
 import { Link } from "@nextui-org/link";
 import { signIn, signOut } from "next-auth/react";
-import { getServerSession } from "next-auth/next";
 
 export default async function HeaderNav() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   return (
     <nav className="w-full flex justify-center">

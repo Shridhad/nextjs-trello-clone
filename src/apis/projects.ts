@@ -1,12 +1,36 @@
-import { PrismaClient, Project } from "@prisma/client";
+import prisma from "@/src/utils/db";
+import { Prisma, Project } from "@prisma/client";
 
-const prisma = new PrismaClient();
-const cache: { [key: string]: Project } = {};
+const projectWithIssues = Prisma.validator<Prisma.ProjectDefaultArgs>()({
+  include: { issues: true },
+});
+
+type ProjectWithIssues = Prisma.ProjectGetPayload<typeof projectWithIssues>;
+
+const cache: { [key: string]: ProjectWithIssues } = {};
 
 export async function fetchProjects() {
   return (await prisma.project.findMany({
-    include: { Profile: true },
+    include: { user: true },
   })) as Project[];
+}
+
+type CreateProject = {
+  name: string;
+  key?: string;
+  userId: string;
+};
+
+export async function createProject({ name, key, userId }: CreateProject) {
+  return await prisma.project.create({
+    data: {
+      name,
+      key: key ?? name.substring(0, 3),
+      user: {
+        connect: { id: userId },
+      },
+    },
+  });
 }
 
 export async function fetchProject(key: string) {
@@ -18,12 +42,11 @@ export async function fetchProject(key: string) {
       key,
     },
     include: {
-      Profile: true,
-      CardList: {
+      user: true,
+      issues: {
         orderBy: {
-          order: "asc",
+          createdAt: "asc",
         },
-        include: { Card: true },
       },
     },
   });

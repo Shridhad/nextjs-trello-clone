@@ -8,20 +8,24 @@ datasource db {
   url        = env("DATABASE_URL")
   directUrl  = env("DIRECT_URL")
   extensions = [uuid_ossp(map: "uuid-ossp", schema: "extensions")]
-  schemas  = ["public", "extensions"]
+  schemas    = ["public", "extensions", "next-auth"]
 }
 
-model Card {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt   DateTime? @default(now()) @db.Timestamptz(6)
-  title       String?   @default("")
-  description String?   @default("")
-  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
-  dueDate     DateTime? @db.Timestamptz(6)
-  archived    Boolean?  @default(false)
-  listId      String   @db.Uuid
-  key         String?   @default("") @db.VarChar
-  list        CardList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+model Issue {
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt   DateTime?     @default(now()) @db.Timestamptz(6)
+  title       String?       @default("")
+  description String?       @default("")
+  status      IssueStatus   @default(Backlog)
+  priority    IssuePriority @default(NoPriority)
+  updatedAt   DateTime      @updatedAt @db.Timestamptz(6)
+  dueDate     DateTime?     @db.Timestamptz(6)
+  archived    Boolean?      @default(false)
+  projectId   String        @db.Uuid
+  userId      String
+  key         String?       @default("") @db.VarChar
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -34,37 +38,11 @@ model Project {
   type        ProjectType @default(TodoList)
   archived    Boolean     @default(false)
   updatedAt   DateTime    @updatedAt @db.Timestamptz(6)
-  profileId   String      @db.Uuid
+  userId      String
   key         String      @db.VarChar
-  CardList    CardList[]
-  Profile     Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  issues      Issue[]
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@schema("public")
-}
-
-model Profile {
-  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt DateTime   @default(now()) @db.Timestamptz(6)
-  name      String     @default("")
-  email     String
-  Project   Project[]
-
-  @@schema("public")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model CardList {
-  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
-  title       String?   @default("")
-  description String?   @default("")
-  order       Int?      @default(0)
-  updatedAt   DateTime? @db.Timestamptz(6)
-  archived    Boolean?  @default(false)
-  projectId   String?   @db.Uuid
-  Card       Card[]
-  Project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  
   @@schema("public")
 }
 
@@ -73,4 +51,80 @@ enum ProjectType {
   Kanban
 
   @@schema("public")
+}
+
+enum IssueStatus {
+  Backlog
+  Planned
+  InProgress
+  Paused
+  Blocked
+  Completed
+  Canceled
+
+  @@schema("public")
+}
+
+enum IssuePriority {
+  NoPriority
+  Urgent
+  High
+  Medium
+  Low
+
+  @@schema("public")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@schema("next-auth")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("next-auth")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  projects Project[]
+  issues   Issue[]
+
+  @@schema("next-auth")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@schema("next-auth")
 }

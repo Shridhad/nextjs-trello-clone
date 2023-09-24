@@ -1,21 +1,16 @@
 "use server";
 
-import { createCard } from "@/src/apis/cards";
-import { createList } from "@/src/apis/cardLists";
+import { createIssue as create } from "@/src/apis/issues";
 import { revalidatePath } from "next/cache";
+import { getUser } from "@/src/utils/session";
 
 export async function createIssue(
   title: string,
   description: string,
-  listId: string
+  projectId: string
 ) {
-  const card = await createCard(title, description, listId);
+  const user = await getUser();
+  const card = await create(title, description, projectId, user.id);
   revalidatePath("projects/[projectKey]");
   return { card, result: "Ok" };
-}
-
-export async function createNewList(title: string, projectId: string) {
-  const cardList = await createList(title, projectId);
-  revalidatePath("projects/[projectKey]");
-  return { title, cardList, result: "ok" };
 }

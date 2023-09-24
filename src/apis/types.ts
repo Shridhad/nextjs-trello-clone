@@ -1,6 +1,5 @@
 import { Prisma } from "@prisma/client";
-export type { Project, CardList, Card } from "@prisma/client";
+export type { Project, Issue } from "@prisma/client";
 
-export type CardListCreateInput = Prisma.CardListCreateInput;
-export type CardCreateInput = Prisma.CardCreateInput;
+export type IssueCreateInput = Prisma.IssueCreateInput;
 export type ProjectCreateInput = Prisma.ProjectCreateInput;
