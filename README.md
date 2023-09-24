@@ -1,32 +1,42 @@
-# Supabase Starter
+# Trello & Linear Clone
 
-This starter configures Supabase Auth to use cookies, making the user's session available throughout the entire Next.js app - Client Components, Server Components, Route Handlers, Server Actions and Middleware.
+This is demo trello & linear inspired application build with [NextJS](https://nextjs.org/), [Prisma](https://www.prisma.io/), [Auth.js](https://authjs.dev/), and [Supabase](https://supabase.com/)
 
-## Deploy your own
+The application is configured with Auth.js with [Google Provider](https://next-auth.js.org/providers/google) with database managed sessions. This makes the user's session available on server side. With Next's server side components, we do not yet need the user's session on client side.
 
-The Vercel deployment will guide you through creating a Supabase account and project. After installation of the Supabase integration, all relevant environment variables will be set up so that the project is usable immediately after deployment 🚀
+## Configuration
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&integration-ids=oac_jUduyjQgOyzev1fjrW83NYOv)
+Create `.env.local` file at root of the project and configure following keys:
 
-## How to use
+```properties
+NEXT_PUBLIC_AUTH_GOOGLE_CLIENT_ID=
+NEXT_PUBLIC_AUTH_GOOGLE_SECRET_KEY=
 
-1. Create a [new Supabase project](https://database.new)
-1. Run `npx create-next-app -e with-supabase` to create a Next.js app using the Supabase Starter template
-1. Use `cd` to change into the app's directory
-1. Run `npm install` to install dependencies
-1. Rename `.env.local.example` to `.env.local` and update the values for `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` from [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
-1. Run `npm run dev` to start the local development server
+# https://next-auth.js.org/configuration/options#options
+# When deploying to production, set the NEXTAUTH_URL environment variable to the canonical URL of your site.
+NEXTAUTH_URL=http://localhost:3000
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+# A random string is used to hash tokens, sign/encrypt cookies and generate cryptographic keys.
+NEXTAUTH_SECRET=
+```
 
-### Create a Supabase client
+You can find steps here to create Google client ID and secret keys on [Google for Developers](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid)
 
-Check out the [`/app/_examples`](./app/_examples/) folder for an example of creating a Supabase client in:
+Create `.env` file to configure database url for Prisma
 
-- [Client Components](./app/_examples/client-component/page.tsx)
-- [Server Components](./app/_examples/server-component/page.tsx)
-- [Route Handlers](./app/_examples/route-handler/route.ts)
-- [Server Actions](./app/_examples/server-action/page.tsx)
+```properties
+# PostgreSQL connection string used for migrations
+DIRECT_URL="postgres://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres"
+
+# PostgreSQL connection string with pgBouncer config — used by Prisma Client
+DATABASE_URL="postgres://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:6543/postgres?pgbouncer=true"
+```
+
+## Commands
+
+1. Prisma migration - `npx prisma db push` or `npx prisma migrate dev`
+2. Prisma generation - `npx prisma generate`
+3. Run the application - `npm run dev`
 
 ### Database Migration
 
@@ -34,9 +44,3 @@ Check out the [`/app/_examples`](./app/_examples/) folder for an example of crea
 2. Run `npx prisma generate` to generate Prisma types
 3. Run `npx prisma db push` to updated schema with supabase (Note: it will drop database)
 4. `npx prisma migrate dev --name init`
-
-### GraphQL TypeGen
-
-We need to generate typescript types from GraphQL schema using [graphql-codegen](https://www.apollographql.com/docs/apollo-server/workflow/generate-types/)
-
-1. After updating the graphql schema run the command - `npm run codegen`

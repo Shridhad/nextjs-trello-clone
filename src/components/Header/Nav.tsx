@@ -1,6 +1,5 @@
 import { getServerAuthSession } from "@/src/app/api/auth/[...nextauth]/route";
 import { Link } from "@nextui-org/link";
-import { signIn, signOut } from "next-auth/react";
 
 export default async function HeaderNav() {
   const session = await getServerAuthSession();

@@ -10,8 +10,8 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(client),
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_AUTH_GITHUB_CLIENT_ID!,
-      clientSecret: process.env.NEXT_PUBLIC_AUTH_GITHUB_SECRET_KEY!,
+      clientId: process.env.NEXT_PUBLIC_AUTH_GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.NEXT_PUBLIC_AUTH_GOOGLE_SECRET_KEY!,
       authorization: {
         params: {
           prompt: "consent",
@@ -37,9 +37,6 @@ export const authOptions: NextAuthOptions = {
       if (session?.user) {
         session.user.id = user.id;
       }
-      logger.info("Session: ", session);
-      logger.info("Token: ", token);
-      logger.info("User: ", user);
       return session;
     },
   },
