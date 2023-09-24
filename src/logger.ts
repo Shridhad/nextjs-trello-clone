@@ -6,7 +6,7 @@ const { combine, timestamp, json } = winston.format;
 //   format: combine(timestamp(), json()),
 //   transports: [
 //     new winston.transports.File({
-//       filename: "../logs/app.log",
+//       filename: "./logs/app.log",
 //     }),
 //   ],
 // });
